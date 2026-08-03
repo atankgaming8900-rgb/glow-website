@@ -10,59 +10,95 @@
 const slides = [
     {
         title: "Red Sprites",
-        description: "Experience Minecraft skies like never before."
+        description: "Experience Minecraft skies like never before.",
+        image: "red-sprites-hero.png"
     },
     {
         title: "Aurora",
-        description: "Bring atmospheric skies and immersive light to your world."
+        description: "Bring atmospheric skies and immersive light to your world.",
+        image: "aurora-hero.png"
     },
     {
-        title: "Coming Soon",
-        description: "A new Glow shader is being created."
+        title: "Cinematic",
+        description: "Experience beautiful lighting and breathtaking Minecraft worlds.",
+        image: "sunset-hero.png"
     }
 ];
 
 let currentSlide = 0;
+let slideTimer;
 
+const hero = document.querySelector(".hero");
+const heroBackground = document.querySelector(".hero-background");
 const heroTitle = document.getElementById("heroTitle");
 const heroDescription = document.getElementById("heroDescription");
 const sliderDots = document.querySelectorAll("#sliderDots button");
+
 
 function showSlide(index) {
 
     currentSlide = (index + slides.length) % slides.length;
 
+    const slide = slides[currentSlide];
+
+    /* Fade text out */
+
     heroTitle.style.opacity = "0";
     heroDescription.style.opacity = "0";
+    heroBackground.style.opacity = "0";
+
 
     setTimeout(() => {
 
-        heroTitle.textContent = slides[currentSlide].title;
-        heroDescription.textContent = slides[currentSlide].description;
+        /* Change content */
+
+        heroTitle.textContent = slide.title;
+        heroDescription.textContent = slide.description;
+
+        heroBackground.style.backgroundImage = `
+            linear-gradient(
+                90deg,
+                rgba(5, 6, 8, 0.88) 0%,
+                rgba(5, 6, 8, 0.55) 45%,
+                rgba(5, 6, 8, 0.15) 100%
+            ),
+            url("../${slide.image}")
+        `;
+
+
+        /* Fade everything back in */
 
         heroTitle.style.opacity = "1";
         heroDescription.style.opacity = "1";
+        heroBackground.style.opacity = "1";
 
-    }, 200);
+
+    }, 400);
+
+
+    /* Update dots */
 
     sliderDots.forEach((dot, i) => {
-        dot.classList.toggle("active", i === currentSlide);
+
+        dot.classList.toggle(
+            "active",
+            i === currentSlide
+        );
+
     });
+
+
+    /* Restart timer */
+
+    clearTimeout(slideTimer);
+
+    slideTimer = setTimeout(() => {
+
+        showSlide(currentSlide + 1);
+
+    }, 4000);
+
 }
-
-
-/* Previous button */
-
-document.getElementById("prevSlide").addEventListener("click", () => {
-    showSlide(currentSlide - 1);
-});
-
-
-/* Next button */
-
-document.getElementById("nextSlide").addEventListener("click", () => {
-    showSlide(currentSlide + 1);
-});
 
 
 /* Dot navigation */
@@ -70,17 +106,17 @@ document.getElementById("nextSlide").addEventListener("click", () => {
 sliderDots.forEach((dot, index) => {
 
     dot.addEventListener("click", () => {
+
         showSlide(index);
+
     });
 
 });
 
 
-/* Automatic slideshow */
+/* Start slideshow */
 
-setInterval(() => {
-    showSlide(currentSlide + 1);
-}, 7000);
+showSlide(0);
 
 
 /* =========================================================
