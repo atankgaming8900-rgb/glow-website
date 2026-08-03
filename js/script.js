@@ -62,7 +62,7 @@ function showSlide(index) {
                 rgba(5, 6, 8, 0.55) 45%,
                 rgba(5, 6, 8, 0.15) 100%
             ),
-            url("../${slide.image}")
+            url("${slide.image}")
         `;
 
 
