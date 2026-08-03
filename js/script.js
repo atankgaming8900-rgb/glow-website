@@ -28,20 +28,63 @@ const slides = [
 let currentSlide = 0;
 let slideTimer;
 
-const hero = document.querySelector(".hero");
-const heroBackground = document.querySelector(".hero-background");
 const heroTitle = document.getElementById("heroTitle");
 const heroDescription = document.getElementById("heroDescription");
-const sliderDots = document.querySelectorAll("#sliderDots button");
+
+const currentBackground =
+    document.querySelector(".hero-background-current");
+
+const nextBackground =
+    document.querySelector(".hero-background-next");
+
+const sliderDots =
+    document.querySelectorAll("#sliderDots button");
+
+
+function getBackground(image) {
+
+    return `
+        linear-gradient(
+            90deg,
+            rgba(5, 6, 8, 0.88) 0%,
+            rgba(5, 6, 8, 0.55) 45%,
+            rgba(5, 6, 8, 0.15) 100%
+        ),
+        url("${image}")
+    `;
+
+}
+
+
+/* Preload all images */
+
+slides.forEach(slide => {
+
+    const image = new Image();
+
+    image.src = slide.image;
+
+});
 
 
 function showSlide(index) {
 
-    currentSlide = (index + slides.length) % slides.length;
+    currentSlide =
+        (index + slides.length) % slides.length;
 
     const slide = slides[currentSlide];
 
-    /* Fade only the text */
+
+    /* Prepare next background */
+
+    nextBackground.style.backgroundImage =
+        getBackground(slide.image);
+
+
+    nextBackground.style.opacity = "1";
+
+
+    /* Fade text */
 
     heroTitle.style.opacity = "0";
     heroDescription.style.opacity = "0";
@@ -52,45 +95,24 @@ function showSlide(index) {
         heroTitle.textContent = slide.title;
         heroDescription.textContent = slide.description;
 
-        heroBackground.style.backgroundImage = `
-            linear-gradient(
-                90deg,
-                rgba(5, 6, 8, 0.88) 0%,
-                rgba(5, 6, 8, 0.55) 45%,
-                rgba(5, 6, 8, 0.15) 100%
-            ),
-            url("${slide.image}")
-        `;
-
         heroTitle.style.opacity = "1";
         heroDescription.style.opacity = "1";
 
     }, 200);
 
 
-    /* Update dots */
+    /* After crossfade, make next layer current */
 
-    sliderDots.forEach((dot, i) => {
+    setTimeout(() => {
 
-        dot.classList.toggle(
-            "active",
-            i === currentSlide
-        );
+        currentBackground.style.backgroundImage =
+            getBackground(slide.image);
 
-    });
+        currentBackground.style.opacity = "1";
 
+        nextBackground.style.opacity = "0";
 
-    /* Restart timer */
-
-    clearTimeout(slideTimer);
-
-    slideTimer = setTimeout(() => {
-
-        showSlide(currentSlide + 1);
-
-    }, 4000);
-
-}
+    }, 800);
 
 
     /* Update dots */
@@ -130,19 +152,19 @@ sliderDots.forEach((dot, index) => {
 
 });
 
-/* Preload hero images */
-
-slides.forEach(slide => {
-
-    const image = new Image();
-
-    image.src = slide.image;
-
-});
 
 /* Start slideshow */
 
-showSlide(0);
+ccurrentBackground.style.backgroundImage =
+    getBackground(slides[0].image);
+
+sliderDots[0].classList.add("active");
+
+slideTimer = setTimeout(() => {
+
+    showSlide(1);
+
+}, 4000);
 
 
 /* =========================================================
