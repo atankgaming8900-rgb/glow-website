@@ -265,6 +265,8 @@ input {
     transform: scale(1.03);
 
     animation: heroZoom 12s ease-in-out infinite alternate;
+   opacity: 1;
+   transition: opacity 0.8s ease;
 }
 
 @keyframes heroZoom {
