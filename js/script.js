@@ -28,22 +28,22 @@ const slides = [
 let currentSlide = 0;
 let slideTimer;
 
-const heroTitle = document.getElementById("heroTitle");
-const heroDescription = document.getElementById("heroDescription");
+const heroBackground =
+    document.querySelector(".hero-background");
 
-const currentBackground =
-    document.querySelector(".hero-background-current");
+const heroTitle =
+    document.getElementById("heroTitle");
 
-const nextBackground =
-    document.querySelector(".hero-background-next");
+const heroDescription =
+    document.getElementById("heroDescription");
 
 const sliderDots =
     document.querySelectorAll("#sliderDots button");
 
 
-function getBackground(image) {
+function setHeroImage(image) {
 
-    return `
+    heroBackground.style.backgroundImage = `
         linear-gradient(
             90deg,
             rgba(5, 6, 8, 0.88) 0%,
@@ -56,7 +56,7 @@ function getBackground(image) {
 }
 
 
-/* Preload all images */
+/* Preload images */
 
 slides.forEach(slide => {
 
@@ -75,15 +75,6 @@ function showSlide(index) {
     const slide = slides[currentSlide];
 
 
-    /* Prepare next background */
-
-    nextBackground.style.backgroundImage =
-        getBackground(slide.image);
-
-
-    nextBackground.style.opacity = "1";
-
-
     /* Fade text */
 
     heroTitle.style.opacity = "0";
@@ -95,24 +86,12 @@ function showSlide(index) {
         heroTitle.textContent = slide.title;
         heroDescription.textContent = slide.description;
 
+        setHeroImage(slide.image);
+
         heroTitle.style.opacity = "1";
         heroDescription.style.opacity = "1";
 
     }, 200);
-
-
-    /* After crossfade, make next layer current */
-
-    setTimeout(() => {
-
-        currentBackground.style.backgroundImage =
-            getBackground(slide.image);
-
-        currentBackground.style.opacity = "1";
-
-        nextBackground.style.opacity = "0";
-
-    }, 800);
 
 
     /* Update dots */
@@ -127,7 +106,7 @@ function showSlide(index) {
     });
 
 
-    /* Restart timer */
+    /* Restart automatic timer */
 
     clearTimeout(slideTimer);
 
@@ -153,12 +132,19 @@ sliderDots.forEach((dot, index) => {
 });
 
 
-/* Start slideshow */
+/* Start */
 
-ccurrentBackground.style.backgroundImage =
-    getBackground(slides[0].image);
+setHeroImage(slides[0].image);
 
-sliderDots[0].classList.add("active");
+sliderDots.forEach((dot, i) => {
+
+    dot.classList.toggle(
+        "active",
+        i === 0
+    );
+
+});
+
 
 slideTimer = setTimeout(() => {
 
