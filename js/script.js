@@ -343,16 +343,16 @@ revealStyle.textContent = `
 
     .reveal {
         opacity: 0;
-        transform: translateY(35px);
+        transform: translateY(45px) scale(0.98);
 
         transition:
-            opacity 0.8s ease,
-            transform 0.8s ease;
+            opacity 0.9s ease,
+            transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .revealed {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 
 `;
