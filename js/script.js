@@ -74,7 +74,8 @@ function showSlide(index) {
 
     const slide = slides[currentSlide];
 
-    /* Fade text and background together */
+
+    /* Fade everything */
 
     heroTitle.style.opacity = "0";
     heroDescription.style.opacity = "0";
@@ -83,15 +84,10 @@ function showSlide(index) {
 
     setTimeout(() => {
 
-        /* Change everything while invisible */
-
         heroTitle.textContent = slide.title;
         heroDescription.textContent = slide.description;
 
         setHeroImage(slide.image);
-
-
-        /* Bring everything back together */
 
         heroTitle.style.opacity = "1";
         heroDescription.style.opacity = "1";
@@ -112,55 +108,7 @@ function showSlide(index) {
     });
 
 
-    /* Restart timer */
-
-    clearTimeout(slideTimer);
-
-    slideTimer = setTimeout(() => {
-
-        showSlide(currentSlide + 1);
-
-    }, 4000);
-
-}
-
-    /* Fade text */
-
-    heroTitle.style.opacity = "0";
-    heroDescription.style.opacity = "0";
-
-
-    setTimeout(() => {
-
-        heroTitle.textContent = slide.title;
-        heroDescription.textContent = slide.description;
-
-        heroBackground.style.opacity = "0";
-
-        setTimeout(() => {
-           setHeroImage(slide.image);
-           heroBackground.style.opacity = "1";
-        }, 400);
-
-        heroTitle.style.opacity = "1";
-        heroDescription.style.opacity = "1";
-
-    }, 200);
-
-
-    /* Update dots */
-
-    sliderDots.forEach((dot, i) => {
-
-        dot.classList.toggle(
-            "active",
-            i === currentSlide
-        );
-
-    });
-
-
-    /* Restart automatic timer */
+    /* Restart automatic slideshow */
 
     clearTimeout(slideTimer);
 
@@ -186,7 +134,7 @@ sliderDots.forEach((dot, index) => {
 });
 
 
-/* Start */
+/* Start slideshow */
 
 setHeroImage(slides[0].image);
 
@@ -205,7 +153,6 @@ slideTimer = setTimeout(() => {
     showSlide(1);
 
 }, 4000);
-
 
 /* =========================================================
    SEARCH
