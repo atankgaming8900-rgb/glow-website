@@ -41,16 +41,13 @@ function showSlide(index) {
 
     const slide = slides[currentSlide];
 
-    /* Fade text out */
+    /* Fade only the text */
 
     heroTitle.style.opacity = "0";
     heroDescription.style.opacity = "0";
-    heroBackground.style.opacity = "0";
 
 
     setTimeout(() => {
-
-        /* Change content */
 
         heroTitle.textContent = slide.title;
         heroDescription.textContent = slide.description;
@@ -65,15 +62,35 @@ function showSlide(index) {
             url("${slide.image}")
         `;
 
-
-        /* Fade everything back in */
-
         heroTitle.style.opacity = "1";
         heroDescription.style.opacity = "1";
-        heroBackground.style.opacity = "1";
+
+    }, 200);
 
 
-    }, 400);
+    /* Update dots */
+
+    sliderDots.forEach((dot, i) => {
+
+        dot.classList.toggle(
+            "active",
+            i === currentSlide
+        );
+
+    });
+
+
+    /* Restart timer */
+
+    clearTimeout(slideTimer);
+
+    slideTimer = setTimeout(() => {
+
+        showSlide(currentSlide + 1);
+
+    }, 4000);
+
+}
 
 
     /* Update dots */
@@ -113,6 +130,15 @@ sliderDots.forEach((dot, index) => {
 
 });
 
+/* Preload hero images */
+
+slides.forEach(slide => {
+
+    const image = new Image();
+
+    image.src = slide.image;
+
+});
 
 /* Start slideshow */
 
