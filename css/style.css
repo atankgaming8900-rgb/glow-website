@@ -513,7 +513,12 @@ input {
 
 .category-card:hover .category-icon {
     transform: translateY(-5px) scale(1.08);
+
     opacity: 1;
+
+    text-shadow:
+        0 0 8px rgba(255, 255, 255, 0.35),
+        0 0 18px rgba(255, 255, 255, 0.18);
 }
 .category-card h3 {
     margin-top: 30px;
