@@ -585,6 +585,14 @@ input {
         );
 }
 
+.shader-image {
+    transition: transform 0.7s ease;
+}
+
+.shader-card:hover .shader-image {
+    transform: scale(1.06);
+}
+
 .shader-image span {
     position: relative;
     z-index: 2;
