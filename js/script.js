@@ -86,7 +86,12 @@ function showSlide(index) {
         heroTitle.textContent = slide.title;
         heroDescription.textContent = slide.description;
 
-        setHeroImage(slide.image);
+        heroBackground.style.opacity = "0";
+
+        setTimeout(() => {
+           setHeroImage(slide.image);
+           heroBackground.style.opacity = "1";
+        }, 400);
 
         heroTitle.style.opacity = "1";
         heroDescription.style.opacity = "1";
