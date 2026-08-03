@@ -760,14 +760,42 @@ input {
 
 .feature {
     padding: 25px 0;
+
+    transition:
+        transform 0.4s ease,
+        opacity 0.4s ease;
 }
 
 .feature > span {
+    display: inline-block;
+
     font-size: 1.5rem;
+
+    transition:
+        transform 0.4s ease,
+        text-shadow 0.4s ease;
+}
+
+.feature:hover {
+    transform: translateY(-6px);
+}
+
+.feature:hover > span {
+    transform: translateY(-4px) scale(1.1);
+
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.3),
+        0 0 20px rgba(255, 255, 255, 0.15);
 }
 
 .feature h3 {
     margin-top: 20px;
+
+    transition: transform 0.4s ease;
+}
+
+.feature:hover h3 {
+    transform: translateX(2px);
 }
 
 .feature p {
@@ -777,7 +805,6 @@ input {
 
     font-size: 0.9rem;
 }
-
 
 /* =========================================================
    LATEST RELEASES
